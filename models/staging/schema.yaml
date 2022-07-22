@@ -1,0 +1,44 @@
+
+version: 2
+
+sources:
+    - name: staging
+
+      database: nycflights-357114
+
+      schema: etl
+
+      # loaded_at_field: record_loaded_at
+      tables:
+        - name: nyc_airports
+         # freshness:
+           # error_after: {count: 6, period: hour}
+
+models:
+    - name: stg_nyc_airports
+      description: >
+        Load cleaned version of nyc_airports 
+      columns:
+          - name: faa
+            description: Federal Aviation Administration code for each airport
+            tests:
+                - unique:
+                    severity: warn
+                - not_null:
+                    severity: warn
+          - name: name
+            description: Airport name
+          - name: latitude
+            description: Latitude
+          - name: longitude
+            description: Longitude
+          - name: altitude
+            description: Airport altitude.
+          - name: timezone
+            description: Timezone in number
+          - name: dst
+            description: dst code.
+          - name: timezone_name
+            description: Region plus city
+
+            
